@@ -1,0 +1,33 @@
+# ============================================================
+# Diabetes Readmission Clinical AI
+# Governed Data Configuration
+# ============================================================
+
+project:
+  name: "Diabetes Readmission Clinical AI"
+  version: "0.1.0"
+
+data:
+  raw_directory: "data/raw"
+  interim_directory: "data/interim"
+  processed_directory: "data/processed"
+
+  primary_dataset:
+    filename: "diabetic_data.csv"
+
+  supporting_dataset:
+    filename: "IDs_mapping.csv"
+
+target:
+  source_column: "readmitted"
+  derived_column: "readmitted_30d"
+  positive_class: "<30"
+
+reproducibility:
+  random_seed: 42
+
+governance:
+  raw_data_immutable: true
+  patient_level_splitting_required: true
+  locked_test_required: true
+  prediction_time_feature_review_required: true

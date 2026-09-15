@@ -1,0 +1,26 @@
+# ============================================================
+# Diabetes Readmission Clinical AI
+# Python Project Configuration
+# ============================================================
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "diabetes-readmission-clinical-ai"
+version = "0.1.0"
+description = "Production-grade Clinical AI system for governed 30-day diabetes readmission prediction."
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
