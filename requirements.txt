@@ -1,0 +1,37 @@
+# ============================================================
+# Diabetes Readmission Clinical AI
+# Core Project Dependencies
+# ============================================================
+
+# Data engineering
+numpy
+pandas
+pyarrow
+PyYAML
+
+# Scientific computing
+scipy
+
+# Machine learning
+scikit-learn
+xgboost
+
+# Explainability
+shap
+
+# Visualization
+matplotlib
+
+# Statistical analysis
+statsmodels
+
+# Model persistence
+joblib
+
+# Development and testing
+pytest
+
+# Jupyter environment
+jupyter
+jupyterlab
+ipykernel
