@@ -1,0 +1,55 @@
+# ============================================================
+# D1 — RAW DATA PROVENANCE & INTEGRITY MANIFEST
+# Diabetes Readmission Clinical AI
+# ============================================================
+
+manifest:
+  name: "Raw Data Provenance and Integrity Manifest"
+  version: "1.0"
+  lifecycle_stage: "D1 — Data Ingestion & Validation"
+
+dataset:
+  filename: "diabetic_data.csv"
+  project_location: "data/raw/diabetic_data.csv"
+  role: "Primary raw clinical dataset"
+
+  source_dataset:
+    name: "Diabetes 130-US Hospitals for Years 1999-2008"
+    domain: "Inpatient diabetes care and hospital readmission"
+    temporal_coverage: "1999-2008"
+
+integrity:
+  algorithm: "SHA256"
+  sha256: "0689E7EC031237DC63031B938805C48377748761A3B26ACAB621567AFA24DF97"
+  verification_status: "PASS"
+
+raw_data_governance:
+  immutable: true
+  transformations_permitted_in_raw_zone: false
+  git_tracking_permitted: false
+  derived_target_created_in_raw_zone: false
+  analysis_permitted_directly_on_raw_file: false
+
+expected_structure:
+  expected_rows: 101766
+  expected_columns: 50
+  source_target_column: "readmitted"
+
+target_definition:
+  planned_derived_target: "readmitted_30d"
+  positive_source_value: "<30"
+  target_engineered_at_raw_stage: false
+
+validation_status:
+  file_admission: "PASS"
+  integrity_check: "PASS"
+  schema_validation: "PASS"
+  data_contract_validation: "PASS"
+  automated_tests: "15 PASSED"
+  ingestion_gate: "PASS"
+
+governance_note: >
+  The raw dataset is treated as immutable source evidence.
+  All cleaning, cohort construction, target engineering,
+  feature engineering, and analytical transformations must occur
+  downstream through governed and reproducible code.
