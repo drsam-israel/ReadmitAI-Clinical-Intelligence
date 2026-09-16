@@ -1,0 +1,53 @@
+artifact:
+  name: D3 Governed Cohort and Outcome
+  lifecycle_stage: D3 — Cohort & Outcome Engineering
+  version: '1.0'
+cohort:
+  source_encounters: 101766
+  governed_encounters: 100114
+  governed_unique_patients: 70439
+  expired_disposition_ids_excluded:
+  - 11
+  - 19
+  - 20
+  - 21
+  hospice_disposition_ids_retained:
+  - 13
+  - 14
+outcome:
+  source_column: readmitted
+  derived_column: readmitted_30d
+  positive_definition: <30
+  negative_definitions:
+  - '>30'
+  - 'NO'
+  positive_count: 11357
+  positive_rate_pct: 11.3441
+persisted_cohort:
+  path: data/interim/D3_governed_modeling_cohort.parquet
+  format: parquet
+  sha256: 584861DC8CB2ABD0582D024C02335126D64D541A54C91B88CDA9E55336D983B1
+  git_tracked: false
+governance:
+  raw_data_immutable: true
+  patient_level_splitting_required: true
+  identifiers_not_model_features: true
+  hospice_sensitivity_analysis_required: true
+  locked_test_evaluation_performed: false
+  clinical_deployment_approved: false
+validation:
+  status: PASS
+  checks:
+    expected_encounter_count_match: true
+    excluded_count_match: true
+    no_expired_dispositions_remaining: true
+    encounter_ids_unique: true
+    patient_ids_complete: true
+    target_complete: true
+    target_binary: true
+    source_target_preserved: true
+    target_mapping_consistent: true
+    positive_outcomes_preserved: true
+gate:
+  decision: PASS
+  next_stage: D4 — Leakage & Feature Governance

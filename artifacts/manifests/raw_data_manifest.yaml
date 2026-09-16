@@ -40,6 +40,20 @@ target_definition:
   positive_source_value: "<30"
   target_engineered_at_raw_stage: false
 
+supporting_dataset:
+  name: "UCI Diabetes 130-US Hospitals ID Mapping"
+  filename: "IDs_mapping.csv"
+  path: "data/raw/IDs_mapping.csv"
+  role: "Reference mapping for admission, discharge disposition, and admission source identifiers"
+
+  integrity:
+    sha256: "F1BB82B471CB34649352597572C9B1FB00BD27F77B9F5A22A03DC3EB1039749E"
+
+  governance:
+    raw_immutable: true
+    git_tracked: false
+    required_for_cohort_semantic_interpretation: true
+
 validation_status:
   file_admission: "PASS"
   integrity_check: "PASS"

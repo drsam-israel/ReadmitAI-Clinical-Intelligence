@@ -1,0 +1,27 @@
+discharge_disposition_id,description,mapping_description_available,encounters,unique_patients,encounter_pct,positive_30d_count,raw_30d_rate
+1,Discharged to home,True,60234,46979,59.1887,5602,9.3004
+3,Discharged/transferred to SNF,True,13954,10887,13.7118,2046,14.6625
+6,Discharged/transferred to home with home health service,True,12902,10874,12.6781,1638,12.6957
+18,NULL,True,3691,2808,3.6269,459,12.4357
+2,Discharged/transferred to another short term hospital,True,2128,2045,2.0911,342,16.0714
+22,Discharged/transferred to another rehab fac including rehab units of a hospital .,True,1993,1896,1.9584,552,27.6969
+11,Expired,True,1642,1642,1.6135,0,0.0
+5,Discharged/transferred to another type of inpatient care institution,True,1184,1121,1.1635,247,20.8615
+25,Not Mapped,True,989,884,0.9718,92,9.3023
+4,Discharged/transferred to ICF,True,815,720,0.8009,104,12.7607
+7,Left AMA,True,623,570,0.6122,90,14.4462
+23,Discharged/transferred to a long term care hospital.,True,412,388,0.4049,30,7.2816
+13,Hospice / home,True,399,387,0.3921,19,4.7619
+14,Hospice / medical facility,True,372,371,0.3655,24,6.4516
+28,Discharged/transferred/referred to a psychiatric hospital of psychiatric distinct part unit of a hospital,True,139,127,0.1366,51,36.6906
+8,Discharged/transferred to home under care of Home IV provider,True,108,104,0.1061,15,13.8889
+15,Discharged/transferred within this institution to Medicare approved swing bed,True,63,61,0.0619,28,44.4444
+24,Discharged/transferred to a nursing facility certified under Medicaid but not certified under Medicare.,True,48,43,0.0472,7,14.5833
+9,Admitted as an inpatient to this hospital,True,21,20,0.0206,9,42.8571
+17,Discharged/transferred/referred to this institution for outpatient services,True,14,14,0.0138,0,0.0
+16,Discharged/transferred/referred another institution for outpatient services,True,11,9,0.0108,0,0.0
+19,"Expired at home. Medicaid only, hospice.",True,8,8,0.0079,0,0.0
+10,Neonate discharged to another hospital for neonatal aftercare,True,6,6,0.0059,0,0.0
+27,Discharged/transferred to a federal health care facility.,True,5,5,0.0049,0,0.0
+12,Still patient or expected to return for outpatient services,True,3,2,0.0029,2,66.6667
+20,"Expired in a medical facility. Medicaid only, hospice.",True,2,2,0.002,0,0.0

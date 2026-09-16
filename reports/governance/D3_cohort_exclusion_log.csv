@@ -1,0 +1,4 @@
+discharge_disposition_id,description,mapping_description_available,encounters,unique_patients,encounter_pct,positive_30d_count,raw_30d_rate,cohort_action,exclusion_rationale
+11,Expired,True,1642,1642,1.6135,0,0.0,EXCLUDE,No meaningful post-discharge 30-day readmission opportunity after death/expiration
+19,"Expired at home. Medicaid only, hospice.",True,8,8,0.0079,0,0.0,EXCLUDE,No meaningful post-discharge 30-day readmission opportunity after death/expiration
+20,"Expired in a medical facility. Medicaid only, hospice.",True,2,2,0.002,0,0.0,EXCLUDE,No meaningful post-discharge 30-day readmission opportunity after death/expiration

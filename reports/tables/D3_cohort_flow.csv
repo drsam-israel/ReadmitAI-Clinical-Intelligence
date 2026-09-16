@@ -1,0 +1,4 @@
+stage,encounters,patients,excluded_at_stage
+Source dataset,101766,71518,0
+Exclude death / expired discharge dispositions,100114,70439,1652
+Final governed modeling cohort,100114,70439,0
