@@ -1,0 +1,6 @@
+risk_id,risk_type,risk_level,evidence,downstream_control,lifecycle_owner,status
+D2-BIAS-001,Temporal bias,HIGH,Source encounters are from 1999-2008.,Require contemporary external validation before clinical deployment.,Clinical AI development team,OPEN
+D2-BIAS-002,Representation bias,REVIEW,Several demographic subgroups have low representation.,Require subgroup-specific performance estimation and uncertainty assessment.,Clinical AI development team,OPEN
+D2-BIAS-003,Measurement / missingness bias,REVIEW,Major variables show substantial missingness; subgroup missingness rates require comparison.,Evaluate missingness patterns by demographic and clinical groups before feature approval.,Clinical AI development team,OPEN
+D2-BIAS-004,Repeated-patient weighting,REVIEW,Some patients contribute multiple encounters.,Use patient-disjoint data splitting and patient-aware statistical evaluation.,Clinical AI development team,OPEN
+D2-BIAS-005,Label / outcome bias,REVIEW,"Observed readmission may reflect healthcare access, utilization, discharge processes and outcome ascertainment in addition to clinical risk.",Document label limitations and evaluate subgroup outcome and model-error patterns.,Clinical AI development team,OPEN

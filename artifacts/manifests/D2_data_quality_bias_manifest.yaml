@@ -1,0 +1,29 @@
+project: Diabetes Readmission Clinical AI
+lifecycle_stage: D2 Data Quality & Bias Assessment
+framework:
+- Accuracy
+- Completeness
+- Currency
+- Consistency
+- Representation
+- Bias
+gate_decision: CONDITIONAL PASS
+clinical_deployment_status: NOT APPROVED
+generated_at_utc: '2026-09-16T01:32:11.266163+00:00'
+generated_files:
+- reports/tables/D2_data_quality_scorecard.csv
+- reports/tables/D2_missingness_completeness_matrix.csv
+- reports/tables/D2_representation_summary.csv
+- reports/tables/D2_subgroup_measurement_audit.csv
+- reports/governance/D2_data_quality_issue_log.csv
+- reports/governance/D2_bias_risk_register.csv
+- reports/governance/D2_data_quality_audit_report.md
+- reports/governance/D2_quality_bias_gate_decision.md
+downstream_controls:
+- patient-disjoint splitting
+- prediction-time feature governance
+- missingness semantic governance
+- subgroup performance evaluation
+- fairness evaluation
+- locked-test governance
+- contemporary external validation
