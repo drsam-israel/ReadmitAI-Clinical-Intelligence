@@ -1,0 +1,34 @@
+stage: D4
+name: Leakage & Feature Governance
+project: Diabetes Readmission Clinical AI
+generated_at_utc: '2026-09-16T11:02:30.550301+00:00'
+gate_decision: PASS
+clinical_deployment_status: NOT APPROVED
+prediction_context:
+  timestamp: Before discharge, at the point when the model output would be used to
+    support discharge-planning decisions.
+  horizon: Readmission occurring within 30 days after discharge.
+  outcome: 'Binary 30-day readmission outcome: readmitted_30d = 1 when readmitted
+    == ''<30''; otherwise 0.'
+field_counts:
+  total: 51
+  approved: 8
+  conditional: 33
+  blocked: 6
+  identifier_governance_only: 2
+  target_outcome: 2
+  unassessed: 0
+mandatory_controls:
+  patient_level_splitting_required: true
+  identifiers_prohibited_as_predictors: true
+  targets_prohibited_as_predictors: true
+  conditional_features_require_governance: true
+  blocked_features_prohibited: true
+  locked_test_protection_required: true
+generated_files:
+- reports/tables/D4_feature_governance_register.csv
+- reports/tables/D4_leakage_decision_register.csv
+- reports/tables/D4_feature_disposition_summary.csv
+- reports/governance/D4_prediction_time_contract.md
+- reports/governance/D4_leakage_feature_governance_report.md
+- reports/governance/D4_feature_governance_gate_decision.md
