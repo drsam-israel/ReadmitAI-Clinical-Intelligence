@@ -1,0 +1,70 @@
+lifecycle_stage: D6_GOVERNED_FEATURE_ENGINEERING
+generated_at_utc: '2026-09-17T01:46:10.963248+00:00'
+source_dependencies:
+  d3_governed_cohort: D3_governed_modeling_cohort.parquet
+  d5_split_assignment: D5_patient_split_assignment.csv
+  d5_split_assignment_sha256: D575A296909467EB4CDE7529978D5306C38BFE26959A4EBEA907CE209472977E
+development_population:
+  encounters: 85076
+  patients: 59871
+  permitted_partitions:
+  - train
+  - validation
+  locked_partition: test
+  locked_test_present: false
+feature_governance:
+  registered_feature_count: 40
+  candidate_feature_count: 10
+  conditional_feature_count: 30
+  candidate_features:
+  - race
+  - gender
+  - age
+  - admission_type_id
+  - admission_source_id
+  - prior_outpatient_use
+  - prior_emergency_use
+  - prior_inpatient_use
+  - prior_utilization_intensity
+  - prior_utilization_domain_count
+  conditional_features:
+  - diag_1_domain
+  - diag_2_domain
+  - diag_3_domain
+  - any_diabetes_diagnosis
+  - any_circulatory_diagnosis
+  - any_respiratory_diagnosis
+  - any_genitourinary_diagnosis
+  - any_injury_poisoning_diagnosis
+  - distinct_diagnosis_domain_count
+  - a1c_result_category
+  - max_glucose_result_category
+  - a1c_tested
+  - max_glucose_tested
+  - any_glycemic_test_recorded
+  - a1c_abnormal
+  - a1c_markedly_elevated
+  - max_glucose_abnormal
+  - max_glucose_markedly_elevated
+  - any_glycemic_abnormality
+  - any_marked_glycemic_abnormality
+  - glycemic_abnormality_count
+  - diabetes_medication_intensity
+  - any_diabetes_medication_exposure
+  - insulin_exposure
+  - metformin_exposure
+  - any_directional_medication_change
+  - directional_medication_change_count
+  - diabetes_medication_prescribed
+  - diabetes_medication_changed
+  - diabetes_treatment_structure
+  candidate_conditional_overlap: []
+  prohibited_model_features: []
+  candidate_features_with_conditional_lineage: []
+development_feature_artifact:
+  path: data\interim\D6_development_engineered.parquet
+  sha256: B4A38DFE8D316E2C74C8B08F31C0EC1060B880741304FC3971371DBFBA21C3C0
+  rows: 85076
+  columns: 44
+validation_status: PASS
+downstream_authorization: D7_GOVERNED_PREPROCESSING

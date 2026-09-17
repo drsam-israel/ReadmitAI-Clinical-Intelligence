@@ -1,0 +1,14 @@
+metric,value
+development_encounters,85076
+development_patients,59871
+train_encounters,70024
+validation_encounters,15052
+locked_test_encounters,0
+train_patients,49306
+validation_patients,10565
+registered_features,40
+candidate_features,10
+conditional_features,30
+candidate_conditional_overlap,0
+prohibited_model_features,0
+candidate_conditional_lineage_violations,0
