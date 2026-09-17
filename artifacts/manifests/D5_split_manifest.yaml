@@ -1,0 +1,35 @@
+stage: D5
+name: Governed Patient-Level Splitting
+project: Diabetes Readmission Clinical AI
+generated_at_utc: '2026-09-17T00:08:51.103461+00:00'
+gate_decision: PASS
+clinical_deployment_status: NOT APPROVED
+grouping_key: patient_nbr
+target: readmitted_30d
+random_seed: 42
+split_fractions:
+  train: 0.7
+  validation: 0.15
+  test: 0.15
+source_counts:
+  encounters: 100114
+  patients: 70439
+patient_overlap:
+  multi_split_patients: 0
+  train_validation: 0
+  train_test: 0
+  validation_test: 0
+reproducibility:
+  same_seed_same_assignment: true
+locked_test:
+  status: LOCKED
+  development_use_permitted: false
+authoritative_assignment:
+  path: artifacts/splits/D5_patient_split_assignment.csv
+  sha256: D575A296909467EB4CDE7529978D5306C38BFE26959A4EBEA907CE209472977E
+generated_files:
+- artifacts/splits/D5_patient_split_assignment.csv
+- reports/tables/D5_split_summary.csv
+- reports/tables/D5_patient_overlap_audit.csv
+- reports/governance/D5_split_governance_contract.md
+- reports/governance/D5_split_gate_decision.md
