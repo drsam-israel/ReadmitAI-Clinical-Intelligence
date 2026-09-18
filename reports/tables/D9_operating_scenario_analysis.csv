@@ -1,0 +1,5 @@
+scenario,description,minimum_sensitivity,maximum_alerts_per_100,feasible_threshold_count,minimum_feasible_threshold,maximum_feasible_threshold,highest_feasible_sensitivity,lowest_feasible_alerts_per_100,highest_feasible_precision,scenario_feasible,threshold_selected,locked_test_accessed,deployment_authorized
+HIGH_SENSITIVITY,"Prioritize capture of patients who experience 30-day readmission, accepting a high review burden.",0.8,,8,0.01,0.08,1.0,78.67393037470104,0.1246411079209593,True,False,False,False
+MODERATE_CAPACITY,Evaluate operating points under a hypothetical maximum review capacity of 30 alerts per 100 eligible patients.,,30.0,38,0.13,0.5,0.40543735224586286,0.013287270794578792,0.5,True,False,False,False
+RESTRICTED_CAPACITY,Evaluate operating points under a hypothetical maximum review capacity of 20 alerts per 100 eligible patients.,,20.0,36,0.15,0.5,0.33451536643026003,0.013287270794578792,0.5,True,False,False,False
+BALANCED_EXPLORATORY,Explore thresholds requiring at least 40% sensitivity while limiting review burden to 35 alerts per 100 eligible patients.,0.4,35.0,2,0.12,0.13,0.4639479905437352,26.043050757374438,0.175,True,False,False,False

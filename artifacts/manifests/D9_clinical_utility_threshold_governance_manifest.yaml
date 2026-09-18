@@ -1,0 +1,78 @@
+stage: D9
+stage_name: Clinical Utility & Threshold Governance
+generated_at_utc: '2026-09-18T13:56:57.155803+00:00'
+upstream_dependencies:
+  model: xgboost
+  model_sha256: 2FD02A54DF759EBAAF0D02D64D5ACE16A519DF016990FAC065AF3249BDA88085
+  d7_preprocessor_sha256: 076878C0BD7C9B80897F3AA06157719A1E311165299549D83213C789CA1ECEAC
+  d7_schema_sha256: 69E0E7F19C64350A6995830E875C1303E5D14F55FD7CDA4A7D845CCDE7B756ED
+validation_partition:
+  encounters: 15052
+  positive_outcomes: 1692
+  prevalence: 0.11241031092213659
+  transformed_features: 49
+development_threshold:
+  threshold: 0.12
+  classification: DEVELOPMENT_STAGE_OPERATING_THRESHOLD
+  selection_partition: validation
+  selection_rule: Among VALIDATION thresholds satisfying sensitivity >= 0.40 and alerts_per_100_patients
+    <= 35.0, select the threshold with highest sensitivity; break ties by higher precision,
+    then lower alert burden, then higher threshold.
+  minimum_sensitivity_constraint: 0.4
+  maximum_alerts_per_100_constraint: 35.0
+  feasible_threshold_count: 2
+operating_characteristics:
+  true_positive: 785
+  false_positive: 3924
+  true_negative: 9436
+  false_negative: 907
+  sensitivity: 0.4639479905437352
+  specificity: 0.7062874251497006
+  precision: 0.16670205988532596
+  negative_predictive_value: 0.9123078410519192
+  f1_score: 0.24527417591001405
+  alerts_per_100_patients: 31.28487908583577
+  number_needed_to_evaluate: 5.998726114649681
+decision_curve:
+  model_net_benefit: 0.016603048824680507
+  treat_all_net_benefit: -0.008624646679390224
+  treat_none_net_benefit: 0.0
+  incremental_net_benefit_vs_best_default: 0.016603048824680507
+  model_better_than_both_defaults: true
+  classification: EXPLORATORY_DEVELOPMENT_EVIDENCE
+calibration:
+  observed_prevalence: 0.11241031092213659
+  mean_predicted_probability: 0.11372116307581723
+  brier_score: 0.09736249968861509
+  log_loss: 0.34110139977699366
+  weighted_absolute_calibration_error: 0.006462889217476822
+  maximum_bin_calibration_error: 0.015402180051613229
+  calibration_intercept: -0.004367023016654796
+  calibration_slope: 1.00454765822876
+  model_recalibrated: false
+governance:
+  model_retrained: false
+  hyperparameters_retuned: false
+  preprocessor_refitted: false
+  locked_test_accessed: false
+  external_validation_completed: false
+  institutional_approval_obtained: false
+  autonomous_clinical_decision_permitted: false
+  deployment_authorized: false
+evidence_artifacts:
+  threshold_performance: reports\tables\D9_threshold_performance.csv
+  reference_threshold_tradeoffs: reports\tables\D9_reference_threshold_tradeoffs.csv
+  operating_scenario_analysis: reports\tables\D9_operating_scenario_analysis.csv
+  capacity_frontier: reports\tables\D9_capacity_frontier.csv
+  development_threshold_decision: reports\tables\D9_development_threshold_decision.csv
+  decision_curve_analysis: reports\tables\D9_decision_curve_analysis.csv
+  calibration_table: reports\tables\D9_calibration_table.csv
+  calibration_summary: reports\tables\D9_calibration_summary.csv
+  governance_contract: reports\governance\D9_clinical_utility_threshold_governance_contract.md
+  gate_decision: reports\governance\D9_clinical_utility_threshold_governance_gate_decision.md
+  manifest: artifacts\manifests\D9_clinical_utility_threshold_governance_manifest.yaml
+gate:
+  status: PASS
+  authorized_next_stage: D10
+  authorized_next_stage_name: Fairness & Subgroup Evaluation
+  clinical_deployment_authorized: false
