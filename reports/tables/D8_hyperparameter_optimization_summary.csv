@@ -1,0 +1,4 @@
+model_name,search_method,search_iterations,cv_folds,primary_metric,best_cv_pr_auc,best_parameters,fit_partition,external_validation_used_for_tuning,locked_test_accessed,clinical_threshold_selected
+logistic_regression,GridSearchCV,8,5,average_precision,0.1802850338167527,"{'C': 0.01, 'class_weight': 'balanced'}",train,False,False,False
+random_forest,RandomizedSearchCV,18,5,average_precision,0.18840184561897413,"{'n_estimators': 300, 'min_samples_leaf': 10, 'max_depth': 8, 'class_weight': None}",train,False,False,False
+xgboost,RandomizedSearchCV,24,5,average_precision,0.19163107897469997,"{'subsample': 0.8, 'n_estimators': 200, 'max_depth': 3, 'learning_rate': 0.03, 'colsample_bytree': 0.8}",train,False,False,False

@@ -1,0 +1,5 @@
+model_name,model_role,estimator_class,included_in_hyperparameter_tuning,development_stage,locked_test_access_permitted,clinical_threshold_selection_permitted,deployment_authorized
+dummy_prevalence,NO_SKILL_REFERENCE,DummyClassifier,False,D8,False,False,False
+logistic_regression,INTERPRETABLE_BASELINE,LogisticRegression,True,D8,False,False,False
+random_forest,NONLINEAR_CHALLENGER,RandomForestClassifier,True,D8,False,False,False
+xgboost,BOOSTED_TREE_CHALLENGER,XGBClassifier,True,D8,False,False,False

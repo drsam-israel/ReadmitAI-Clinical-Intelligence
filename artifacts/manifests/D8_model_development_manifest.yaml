@@ -1,0 +1,45 @@
+stage: D8
+stage_name: Governed Model Development & Selection
+gate_status: PASS
+selected_development_model: xgboost
+selection:
+  primary_metric: validation_pr_auc
+  validation_pr_auc: 0.184874208020515
+  validation_roc_auc: 0.6203647005634122
+  runner_up_model: logistic_regression
+  runner_up_validation_pr_auc: 0.1822644988230792
+  pr_auc_margin_vs_runner_up: 0.0026097091974357
+selected_parameters:
+  subsample: 0.8
+  n_estimators: 200
+  max_depth: 3
+  learning_rate: 0.03
+  colsample_bytree: 0.8
+artifact_integrity:
+  model_artifact_path: artifacts\models\D8_selected_development_model.joblib
+  metadata_artifact_path: artifacts\models\D8_selected_development_model_metadata.json
+  model_sha256: 2FD02A54DF759EBAAF0D02D64D5ACE16A519DF016990FAC065AF3249BDA88085
+  metadata_sha256: 5838A6C77F05BB183F90B9AA4B0ED9F0AE5B0FBF2E3E1B1326A79A3A67A1AC76
+governance:
+  fit_partition: train
+  hyperparameter_tuning_partition: train
+  patient_disjoint_cv: true
+  validation_used_for_hyperparameter_tuning: false
+  validation_used_for_model_comparison: true
+  development_candidate_only: true
+  clinical_superiority_claimed: false
+  clinical_utility_established: false
+  locked_test_accessed: false
+  clinical_threshold_selected: false
+  deployment_authorized: false
+cv_preprocessing:
+  representation: frozen_D7_train_transformation
+  preprocessing_fitted_on: complete_train_partition
+  preprocessing_refit_within_cv_fold: false
+  patient_disjoint_model_cv: true
+  interpretation: hyperparameter_tuning_evidence_conditional_on_frozen_D7_representation
+  fully_nested_generalization_estimate: false
+  external_validation_used_for_preprocessing_fit: false
+  external_validation_used_for_hyperparameter_tuning: false
+  locked_test_accessed: false
+authorized_next_stage: D9 — Clinical Utility & Threshold Governance
