@@ -1,0 +1,84 @@
+stage: D7
+stage_name: Governed Preprocessing Pipeline
+generated_at_utc: '2026-09-18T01:24:58.749143+00:00'
+status: PASS
+upstream_dependency:
+  stage: D6
+  artifact: data\interim\D6_development_engineered.parquet
+  expected_sha256: B4A38DFE8D316E2C74C8B08F31C0EC1060B880741304FC3971371DBFBA21C3C0
+development_boundary:
+  train_encounters: 70024
+  validation_encounters: 15052
+  fit_partition: train
+  validation_fit_permitted: false
+  locked_test_label: test
+  locked_test_accessed: false
+feature_contract:
+  raw_primary_feature_count: 10
+  raw_primary_features:
+  - race
+  - gender
+  - age
+  - admission_type_id
+  - admission_source_id
+  - prior_outpatient_use
+  - prior_emergency_use
+  - prior_inpatient_use
+  - prior_utilization_intensity
+  - prior_utilization_domain_count
+  categorical_features:
+  - race
+  - gender
+  - age
+  - admission_type_id
+  - admission_source_id
+  numeric_features:
+  - prior_outpatient_use
+  - prior_emergency_use
+  - prior_inpatient_use
+  - prior_utilization_intensity
+  - prior_utilization_domain_count
+  transformed_feature_count: 49
+unknown_category_governance:
+  canonical_unknown_category: __MISSING_OR_UNKNOWN__
+  source_unknown_values:
+    race:
+    - '?'
+    gender:
+    - '?'
+    - Unknown/Invalid
+    age:
+    - '?'
+    admission_type_id: []
+    admission_source_id: []
+  train_canonical_unknown_counts:
+    race: 1568
+    gender: 3
+    age: 0
+  validation_canonical_unknown_counts:
+    race: 345
+    gender: 0
+    age: 0
+  policy: Explicit source unknown demographic values are preserved as a canonical
+    unknown category rather than imputed into an observed demographic group.
+persisted_artifacts:
+  preprocessor:
+    path: artifacts\preprocessors\D7_primary_preprocessor.joblib
+    sha256: 076878C0BD7C9B80897F3AA06157719A1E311165299549D83213C789CA1ECEAC
+    git_policy: runtime artifact; ignored
+  transformed_schema:
+    path: artifacts\preprocessors\D7_transformed_feature_schema.txt
+    sha256: 69E0E7F19C64350A6995830E875C1303E5D14F55FD7CDA4A7D845CCDE7B756ED
+    git_policy: runtime artifact; ignored
+reproducibility:
+  preprocessor_checksum_verified: true
+  schema_checksum_verified: true
+  train_reproduction_exact: true
+  validation_reproduction_exact: true
+  schema_matches_original: true
+gate:
+  d7_preprocessing: PASS
+  authorized_next_stage: D8 Model Development & Selection
+  model_training_completed: false
+  locked_test_evaluation_authorized: false
+  clinical_deployment_authorized: false

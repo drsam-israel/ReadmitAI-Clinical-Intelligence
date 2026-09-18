@@ -1,0 +1,50 @@
+transformed_position,transformed_feature,source_feature,pathway,transformation,d6_governance_status,authorized_for_primary_model
+1,categorical__race_AfricanAmerican,race,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+2,categorical__race_Asian,race,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+3,categorical__race_Caucasian,race,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+4,categorical__race_Hispanic,race,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+5,categorical__race_Other,race,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+6,categorical__race___MISSING_OR_UNKNOWN__,race,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+7,categorical__gender_Female,gender,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+8,categorical__gender_Male,gender,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+9,categorical__gender___MISSING_OR_UNKNOWN__,gender,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+10,categorical__age_[0-10),age,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+11,categorical__age_[10-20),age,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+12,categorical__age_[20-30),age,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+13,categorical__age_[30-40),age,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+14,categorical__age_[40-50),age,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+15,categorical__age_[50-60),age,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+16,categorical__age_[60-70),age,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+17,categorical__age_[70-80),age,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+18,categorical__age_[80-90),age,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+19,categorical__age_[90-100),age,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+20,categorical__admission_type_id_1,admission_type_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+21,categorical__admission_type_id_2,admission_type_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+22,categorical__admission_type_id_3,admission_type_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+23,categorical__admission_type_id_4,admission_type_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+24,categorical__admission_type_id_5,admission_type_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+25,categorical__admission_type_id_6,admission_type_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+26,categorical__admission_type_id_7,admission_type_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+27,categorical__admission_type_id_8,admission_type_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+28,categorical__admission_source_id_1,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+29,categorical__admission_source_id_2,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+30,categorical__admission_source_id_3,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+31,categorical__admission_source_id_4,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+32,categorical__admission_source_id_5,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+33,categorical__admission_source_id_6,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+34,categorical__admission_source_id_7,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+35,categorical__admission_source_id_8,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+36,categorical__admission_source_id_9,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+37,categorical__admission_source_id_10,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+38,categorical__admission_source_id_11,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+39,categorical__admission_source_id_13,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+40,categorical__admission_source_id_14,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+41,categorical__admission_source_id_17,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+42,categorical__admission_source_id_20,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+43,categorical__admission_source_id_22,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+44,categorical__admission_source_id_25,admission_source_id,categorical,source-unknown normalization + TRAIN-fitted imputation + TRAIN-fitted one-hot encoding,CANDIDATE,True
+45,numeric__prior_outpatient_use,prior_outpatient_use,numeric,TRAIN-fitted median imputation,CANDIDATE,True
+46,numeric__prior_emergency_use,prior_emergency_use,numeric,TRAIN-fitted median imputation,CANDIDATE,True
+47,numeric__prior_inpatient_use,prior_inpatient_use,numeric,TRAIN-fitted median imputation,CANDIDATE,True
+48,numeric__prior_utilization_intensity,prior_utilization_intensity,numeric,TRAIN-fitted median imputation,CANDIDATE,True
+49,numeric__prior_utilization_domain_count,prior_utilization_domain_count,numeric,TRAIN-fitted median imputation,CANDIDATE,True

@@ -1,0 +1,11 @@
+partition,feature,rows,native_missing_count,explicit_unknown_count,total_missing_or_unknown,missing_or_unknown_rate,canonical_replacement,governance_policy
+train,race,70024,0,1568,1568,0.022392322632240374,__MISSING_OR_UNKNOWN__,Preserve explicit source unknowns as a transparent model category; do not infer demographic membership.
+validation,race,15052,0,345,345,0.02292054212064842,__MISSING_OR_UNKNOWN__,Preserve explicit source unknowns as a transparent model category; do not infer demographic membership.
+train,gender,70024,0,3,3,4.2842454015766023e-05,__MISSING_OR_UNKNOWN__,Preserve explicit source unknowns as a transparent model category; do not infer demographic membership.
+validation,gender,15052,0,0,0,0.0,__MISSING_OR_UNKNOWN__,Preserve explicit source unknowns as a transparent model category; do not infer demographic membership.
+train,age,70024,0,0,0,0.0,__MISSING_OR_UNKNOWN__,Preserve explicit source unknowns as a transparent model category; do not infer demographic membership.
+validation,age,15052,0,0,0,0.0,__MISSING_OR_UNKNOWN__,Preserve explicit source unknowns as a transparent model category; do not infer demographic membership.
+train,admission_type_id,70024,0,0,0,0.0,__MISSING_OR_UNKNOWN__,Preserve explicit source unknowns as a transparent model category; do not infer demographic membership.
+validation,admission_type_id,15052,0,0,0,0.0,__MISSING_OR_UNKNOWN__,Preserve explicit source unknowns as a transparent model category; do not infer demographic membership.
+train,admission_source_id,70024,0,0,0,0.0,__MISSING_OR_UNKNOWN__,Preserve explicit source unknowns as a transparent model category; do not infer demographic membership.
+validation,admission_source_id,15052,0,0,0,0.0,__MISSING_OR_UNKNOWN__,Preserve explicit source unknowns as a transparent model category; do not infer demographic membership.
