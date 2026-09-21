@@ -1,0 +1,95 @@
+stage: "D10"
+stage_name: "Fairness & Subgroup Evaluation"
+generated_at_utc: "2026-09-21T00:03:45.888842+00:00"
+target: "readmitted_30d"
+evaluation_partition: "validation"
+source_model:
+  selected_model: "xgboost"
+  sha256: "2FD02A54DF759EBAAF0D02D64D5ACE16A519DF016990FAC065AF3249BDA88085"
+source_threshold:
+  value: 0.12
+  status: "FROZEN_D9_DEVELOPMENT_THRESHOLD"
+  subgroup_specific_thresholds_created: false
+validation_population:
+  encounters: 15052
+  positive_outcomes: 1692
+  negative_outcomes: 13360
+subgroup_evaluation:
+  variables:
+    - "race"
+    - "gender"
+    - "age"
+  rows: 18
+  adequate_support_rows: 14
+  low_support_rows: 4
+  support_policy:
+    minimum_encounters: 100
+    minimum_positive_outcomes: 20
+    minimum_negative_outcomes: 20
+    fairness_standard: false
+calibration:
+  method: "within_subgroup_equal_frequency_quantile_bins"
+  requested_bins_per_subgroup: 5
+  calibration_bin_rows: 90
+  model_recalibrated: false
+  probability_calibration_established: false
+governance_findings:
+  count: 7
+  finding_ids:
+    - "D10-F01"
+    - "D10-F02"
+    - "D10-F03"
+    - "D10-F04"
+    - "D10-F05"
+    - "D10-F06"
+    - "D10-F07"
+  disposition_counts:
+    REVIEW_REQUIRED: 2
+    CLINICAL_REVIEW_REQUIRED: 1
+    MONITOR: 1
+    MONITOR_AND_REVIEW: 1
+    INSUFFICIENT_EVIDENCE: 1
+    DATA_GOVERNANCE_REVIEW: 1
+  fairness_violation_determined: false
+  causal_bias_determined: false
+controls:
+  model_retrained: false
+  hyperparameters_retuned: false
+  preprocessor_refitted: false
+  threshold_retuned: false
+  automatic_mitigation_applied: false
+  locked_test_accessed: false
+  deployment_authorized: false
+gate:
+  decision: "CONDITIONAL PASS"
+  authorized_next_stage: "D11 — Robustness & Transportability"
+  deployment_authorized: false
+artifacts:
+  manifest: "artifacts/manifests/D10_fairness_subgroup_manifest.yaml"
+  governance_contract: "reports/governance/D10_fairness_subgroup_contract.md"
+  gate_decision: "reports/governance/D10_fairness_subgroup_gate_decision.md"
+  tables:
+    subgroup_performance:
+      path: "reports/tables/D10_subgroup_performance.csv"
+      rows: 18
+      columns: 24
+    disparity_summary:
+      path: "reports/tables/D10_disparity_summary.csv"
+      rows: 39
+      columns: 8
+    subgroup_uncertainty:
+      path: "reports/tables/D10_subgroup_uncertainty.csv"
+      rows: 18
+      columns: 40
+    subgroup_calibration:
+      path: "reports/tables/D10_subgroup_calibration.csv"
+      rows: 18
+      columns: 17
+    subgroup_calibration_bins:
+      path: "reports/tables/D10_subgroup_calibration_bins.csv"
+      rows: 90
+      columns: 12
+    governance_findings:
+      path: "reports/tables/D10_governance_findings_registry.csv"
+      rows: 7
+      columns: 17
