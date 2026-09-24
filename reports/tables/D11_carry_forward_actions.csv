@@ -1,0 +1,7 @@
+action_id,action_order,mandatory,action
+D11-ACTION-01,1,True,D12: investigate the contribution of prior-utilization features to the observed operating-point heterogeneity without changing the frozen D9 threshold.
+D11-ACTION-02,2,True,D12: examine feature-attribution behavior for admission_source_id and age while avoiding causal interpretation of attribution values.
+D11-ACTION-03,3,True,"D12: document whether the observed utilization pattern is consistent with model feature dependence, population case-mix differences, or both; do not infer causality from D11 alone."
+D11-ACTION-04,4,True,Governance evidence: retain all 12 low-support observed slices as interpretation limitations rather than treating unstable small-sample metrics as strong evidence.
+D11-ACTION-05,5,True,"D14: reassess discrimination, calibration, operating-point behavior, and relevant subgroup/slice findings once on the locked TEST partition without validation-driven threshold retuning."
+D11-ACTION-06,6,True,"Deployment governance: do not authorize clinical deployment from D11 evidence; external, temporal, institutional/geographic, and prospective validation remain unestablished."

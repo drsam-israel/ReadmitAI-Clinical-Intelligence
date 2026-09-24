@@ -1,0 +1,30 @@
+stage: "D11"
+stage_name: "Robustness & Transportability"
+reporting_package: "Robustness & Transportability Evidence Package"
+validation_status: "PASS"
+evaluation_partition: "validation"
+selected_model: "xgboost"
+model_sha256: "2FD02A54DF759EBAAF0D02D64D5ACE16A519DF016990FAC065AF3249BDA88085"
+d7_preprocessor_sha256: "076878C0BD7C9B80897F3AA06157719A1E311165299549D83213C789CA1ECEAC"
+d7_schema_sha256: "69E0E7F19C64350A6995830E875C1303E5D14F55FD7CDA4A7D845CCDE7B756ED"
+development_threshold: 0.12
+validation_encounters: 15052
+validation_positives: 1692
+validation_negatives: 13360
+stress_scenario_count: 9
+synthetic_assessment_count: 2
+synthetic_review_count: 0
+observed_slice_assessment_count: 35
+observed_heterogeneity_review_count: 6
+low_support_limitation_count: 12
+mandatory_carry_forward_action_count: 6
+disposition: "CONDITIONAL_PASS_PROGRESS_WITH_DOCUMENTED_ROBUSTNESS_FINDINGS"
+progression_authorized: true
+next_lifecycle_stage: "D12"
+locked_test_accessed: false
+external_validation_established: false
+temporal_validation_established: false
+geographic_transportability_established: false
+institutional_transportability_established: false
+prospective_validation_established: false
+deployment_authorized: false

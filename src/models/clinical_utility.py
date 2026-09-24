@@ -327,7 +327,7 @@ import hashlib
 import joblib
 
 from src.features.preprocessing import (
-    build_persisted_d7_primary_preprocessor,
+    load_frozen_d7_primary_preprocessing_bundle,
 )
 
 
@@ -348,6 +348,14 @@ D9_EXPECTED_SELECTED_MODEL = "xgboost"
 D9_EXPECTED_VALIDATION_ENCOUNTERS = 15052
 
 D9_EXPECTED_TRANSFORMED_FEATURE_COUNT = 49
+
+D9_EXPECTED_D7_PREPROCESSOR_SHA256 = (
+    "076878C0BD7C9B80897F3AA06157719A1E311165299549D83213C789CA1ECEAC"
+)
+
+D9_EXPECTED_D7_SCHEMA_SHA256 = (
+    "69E0E7F19C64350A6995830E875C1303E5D14F55FD7CDA4A7D845CCDE7B756ED"
+)
 
 
 # ============================================================
@@ -475,9 +483,9 @@ def build_d9_validation_prediction_bundle() -> dict[str, Any]:
 
     No model fitting occurs here.
 
-    The frozen D7 preprocessing workflow supplies the governed
-    transformed VALIDATION representation through its fitted
-    preprocessing bundle.
+    The frozen D7 preprocessing state is consumed through the
+    governed READ-ONLY downstream interface. D9 must never refit
+    or rewrite the frozen D7 preprocessing artifacts.
 
     Locked TEST is not requested or accessed.
     """
@@ -489,17 +497,28 @@ def build_d9_validation_prediction_bundle() -> dict[str, Any]:
     model_bundle = load_d9_frozen_d8_model()
 
     # --------------------------------------------------------
-    # Load frozen D7 preprocessing workflow
+    # Consume frozen D7 preprocessing state — READ ONLY
     # --------------------------------------------------------
 
     preprocessing_bundle = (
-        build_persisted_d7_primary_preprocessor()
+        load_frozen_d7_primary_preprocessing_bundle(
+            expected_preprocessor_sha256=(
+                D9_EXPECTED_D7_PREPROCESSOR_SHA256
+            ),
+            expected_schema_sha256=(
+                D9_EXPECTED_D7_SCHEMA_SHA256
+            ),
+        )
     )
 
     required_top_level_keys = {
         "fitted_bundle",
         "persistence_validation",
         "persistence_result",
+        "read_only_consumption",
+        "preprocessor_refitted",
+        "artifact_rewritten",
+        "locked_test_accessed",
     }
 
     missing_top_level_keys = (
@@ -509,7 +528,8 @@ def build_d9_validation_prediction_bundle() -> dict[str, Any]:
 
     if missing_top_level_keys:
         raise RuntimeError(
-            "D9 received an incomplete D7 preprocessing bundle. "
+            "D9 received an incomplete frozen D7 preprocessing "
+            "bundle. "
             f"Missing={sorted(missing_top_level_keys)}"
         )
 
@@ -526,15 +546,46 @@ def build_d9_validation_prediction_bundle() -> dict[str, Any]:
     ]
 
     # --------------------------------------------------------
-    # Validate frozen D7 persistence boundary
+    # Validate frozen D7 read-only persistence boundary
     # --------------------------------------------------------
 
     if persistence_validation.get(
         "validation_status"
     ) != "PASS":
         raise RuntimeError(
-            "D9 cannot proceed because D7 persisted "
+            "D9 cannot proceed because frozen D7 persisted "
             "preprocessing validation is not PASS."
+        )
+
+    if preprocessing_bundle.get(
+        "read_only_consumption"
+    ) is not True:
+        raise RuntimeError(
+            "D9 requires read-only consumption of the frozen "
+            "D7 preprocessing state."
+        )
+
+    if preprocessing_bundle.get(
+        "preprocessor_refitted"
+    ) is not False:
+        raise RuntimeError(
+            "D9 detected unauthorized D7 preprocessor refitting."
+        )
+
+    if preprocessing_bundle.get(
+        "artifact_rewritten"
+    ) is not False:
+        raise RuntimeError(
+            "D9 detected unauthorized mutation of a frozen "
+            "D7 preprocessing artifact."
+        )
+
+    if preprocessing_bundle.get(
+        "locked_test_accessed"
+    ) is not False:
+        raise RuntimeError(
+            "D9 detected unauthorized locked TEST access "
+            "through the D7 boundary."
         )
 
     required_fitted_keys = {
@@ -550,7 +601,7 @@ def build_d9_validation_prediction_bundle() -> dict[str, Any]:
 
     if missing_fitted_keys:
         raise RuntimeError(
-            "D9 received an incomplete D7 fitted bundle. "
+            "D9 received an incomplete frozen D7 fitted bundle. "
             f"Missing={sorted(missing_fitted_keys)}"
         )
 
@@ -560,15 +611,17 @@ def build_d9_validation_prediction_bundle() -> dict[str, Any]:
 
     X_validation = fitted_bundle[
         "X_validation_transformed"
-    ]
+    ].copy()
 
     y_validation = fitted_bundle[
         "y_validation"
-    ]
+    ].copy()
 
-    transformed_feature_names = fitted_bundle[
-        "transformed_feature_names"
-    ]
+    transformed_feature_names = list(
+        fitted_bundle[
+            "transformed_feature_names"
+        ]
+    )
 
     # --------------------------------------------------------
     # Validate expected governed dimensions
@@ -604,8 +657,17 @@ def build_d9_validation_prediction_bundle() -> dict[str, Any]:
             f"Observed={len(transformed_feature_names)}"
         )
 
+    if (
+        X_validation.columns.tolist()
+        != transformed_feature_names
+    ):
+        raise RuntimeError(
+            "D9 VALIDATION transformed schema does not match "
+            "the frozen D7 transformed schema."
+        )
+
     # --------------------------------------------------------
-    # Verify D7 artifact integrity remains available
+    # Verify exact frozen D7 artifact identities
     # --------------------------------------------------------
 
     d7_preprocessor_sha256 = persistence_result.get(
@@ -616,16 +678,24 @@ def build_d9_validation_prediction_bundle() -> dict[str, Any]:
         "schema_sha256"
     )
 
-    if not d7_preprocessor_sha256:
+    if (
+        d7_preprocessor_sha256
+        != D9_EXPECTED_D7_PREPROCESSOR_SHA256
+    ):
         raise RuntimeError(
-            "D9 could not recover the frozen D7 "
-            "preprocessor checksum."
+            "D9 frozen D7 preprocessor checksum mismatch. "
+            f"Expected={D9_EXPECTED_D7_PREPROCESSOR_SHA256}, "
+            f"Observed={d7_preprocessor_sha256}"
         )
 
-    if not d7_schema_sha256:
+    if (
+        d7_schema_sha256
+        != D9_EXPECTED_D7_SCHEMA_SHA256
+    ):
         raise RuntimeError(
-            "D9 could not recover the frozen D7 "
-            "transformed-schema checksum."
+            "D9 frozen D7 transformed-schema checksum mismatch. "
+            f"Expected={D9_EXPECTED_D7_SCHEMA_SHA256}, "
+            f"Observed={d7_schema_sha256}"
         )
 
     # --------------------------------------------------------
@@ -803,6 +873,13 @@ def build_d9_validation_prediction_bundle() -> dict[str, Any]:
             False,
 
         "deployment_authorized":
+            False,
+
+        # Explicit frozen-artifact consumption evidence.
+        "d7_read_only_consumption":
+            True,
+
+        "d7_artifact_rewritten":
             False,
 
         "validation_status":

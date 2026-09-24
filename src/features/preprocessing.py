@@ -2661,3 +2661,396 @@ def build_persisted_d7_primary_preprocessor(
         "persistence_validation":
             persistence_validation,
     }
+
+# ============================================================
+# D7.29 — LOAD FROZEN D7 PREPROCESSING STATE (READ-ONLY)
+# ============================================================
+
+def load_frozen_d7_primary_preprocessing_bundle(
+    expected_preprocessor_sha256: str | None = None,
+    expected_schema_sha256: str | None = None,
+) -> dict[str, Any]:
+    """
+    Load and consume the frozen D7 preprocessing state without
+    fitting, persisting, or modifying any D7 artifact.
+
+    This function is the authorized downstream D8+ interface.
+
+    Workflow
+    --------
+    1. Recover governed TRAIN / VALIDATION partitions from D6.
+    2. Normalize source-specific unknown categories according to
+       the frozen D7 governance policy.
+    3. Verify persisted D7 artifact identities when expected
+       checksums are supplied.
+    4. Load the persisted TRAIN-fitted preprocessor.
+    5. Load the persisted transformed feature schema.
+    6. TRANSFORM TRAIN and VALIDATION only.
+    7. Return a downstream-compatible fitted bundle.
+
+    Prohibited
+    ----------
+    - preprocessor.fit()
+    - joblib.dump()
+    - schema overwrite
+    - locked TEST access
+    """
+
+    # --------------------------------------------------------
+    # 1. Recover governed development partitions
+    # --------------------------------------------------------
+
+    partitions = build_d7_train_validation_partitions()
+
+    boundary_validation = (
+        validate_d7_train_validation_boundary(
+            partitions
+        )
+    )
+
+    if (
+        boundary_validation["validation_status"]
+        != "PASS"
+    ):
+        raise RuntimeError(
+            "Frozen D7 consumption blocked because the "
+            "TRAIN/VALIDATION boundary failed validation."
+        )
+
+    X_train_raw = partitions["X_train"].copy()
+    X_validation_raw = (
+        partitions["X_validation"].copy()
+    )
+
+    y_train = partitions["y_train"].copy()
+    y_validation = (
+        partitions["y_validation"].copy()
+    )
+
+    # --------------------------------------------------------
+    # 2. Apply frozen D7 source-unknown normalization policy
+    # --------------------------------------------------------
+
+    X_train_normalized = (
+        normalize_source_unknown_categories(
+            X_train_raw
+        )
+    )
+
+    X_validation_normalized = (
+        normalize_source_unknown_categories(
+            X_validation_raw
+        )
+    )
+
+    train_normalization_validation = (
+        validate_unknown_category_normalization(
+            X_train_raw,
+            X_train_normalized,
+        )
+    )
+
+    validation_normalization_validation = (
+        validate_unknown_category_normalization(
+            X_validation_raw,
+            X_validation_normalized,
+        )
+    )
+
+    if (
+        train_normalization_validation[
+            "validation_status"
+        ]
+        != "PASS"
+    ):
+        raise RuntimeError(
+            "Frozen D7 TRAIN unknown-category "
+            "normalization failed."
+        )
+
+    if (
+        validation_normalization_validation[
+            "validation_status"
+        ]
+        != "PASS"
+    ):
+        raise RuntimeError(
+            "Frozen D7 VALIDATION unknown-category "
+            "normalization failed."
+        )
+
+    # --------------------------------------------------------
+    # 3. Verify physical persisted artifacts
+    # --------------------------------------------------------
+
+    if not D7_PREPROCESSOR_PATH.exists():
+        raise FileNotFoundError(
+            "Frozen D7 preprocessor not found: "
+            f"{D7_PREPROCESSOR_PATH}"
+        )
+
+    if not D7_TRANSFORMED_SCHEMA_PATH.exists():
+        raise FileNotFoundError(
+            "Frozen D7 transformed schema not found: "
+            f"{D7_TRANSFORMED_SCHEMA_PATH}"
+        )
+
+    observed_preprocessor_sha256 = (
+        calculate_file_sha256(
+            D7_PREPROCESSOR_PATH
+        )
+    )
+
+    observed_schema_sha256 = (
+        calculate_file_sha256(
+            D7_TRANSFORMED_SCHEMA_PATH
+        )
+    )
+
+    if (
+        expected_preprocessor_sha256 is not None
+        and observed_preprocessor_sha256
+        != expected_preprocessor_sha256
+    ):
+        raise RuntimeError(
+            "Frozen D7 preprocessor checksum mismatch. "
+            f"Expected={expected_preprocessor_sha256}; "
+            f"Observed={observed_preprocessor_sha256}."
+        )
+
+    if (
+        expected_schema_sha256 is not None
+        and observed_schema_sha256
+        != expected_schema_sha256
+    ):
+        raise RuntimeError(
+            "Frozen D7 transformed-schema checksum mismatch. "
+            f"Expected={expected_schema_sha256}; "
+            f"Observed={observed_schema_sha256}."
+        )
+
+    # --------------------------------------------------------
+    # 4. Load persisted fitted state — NEVER FIT
+    # --------------------------------------------------------
+
+    preprocessor = (
+        load_persisted_primary_preprocessor()
+    )
+
+    transformed_feature_names = (
+        load_persisted_transformed_schema()
+    )
+
+    if (
+        len(transformed_feature_names)
+        != EXPECTED_D7_TRANSFORMED_FEATURE_COUNT
+    ):
+        raise RuntimeError(
+            "Frozen D7 transformed feature count is "
+            "unexpected."
+        )
+
+    # --------------------------------------------------------
+    # 5. Transform using frozen fitted state only
+    # --------------------------------------------------------
+
+    X_train_transformed_array = (
+        preprocessor.transform(
+            X_train_normalized
+        )
+    )
+
+    X_validation_transformed_array = (
+        preprocessor.transform(
+            X_validation_normalized
+        )
+    )
+
+    loaded_feature_names = (
+        preprocessor
+        .get_feature_names_out()
+        .tolist()
+    )
+
+    if (
+        loaded_feature_names
+        != transformed_feature_names
+    ):
+        raise RuntimeError(
+            "Frozen D7 loaded preprocessor schema does not "
+            "match the persisted transformed schema."
+        )
+
+    X_train_transformed = pd.DataFrame(
+        X_train_transformed_array,
+        columns=transformed_feature_names,
+        index=X_train_raw.index,
+    )
+
+    X_validation_transformed = pd.DataFrame(
+        X_validation_transformed_array,
+        columns=transformed_feature_names,
+        index=X_validation_raw.index,
+    )
+
+    # --------------------------------------------------------
+    # 6. Return downstream-compatible read-only bundle
+    # --------------------------------------------------------
+
+    fitted_bundle = {
+        "X_train_raw":
+            X_train_raw,
+
+        "X_validation_raw":
+            X_validation_raw,
+
+        "X_train_normalized":
+            X_train_normalized,
+
+        "X_validation_normalized":
+            X_validation_normalized,
+
+        "X_train_transformed":
+            X_train_transformed,
+
+        "X_validation_transformed":
+            X_validation_transformed,
+
+        "y_train":
+            y_train,
+
+        "y_validation":
+            y_validation,
+
+        "train_encounter_ids":
+            partitions["train_encounter_ids"].copy(),
+
+        "validation_encounter_ids":
+            partitions[
+                "validation_encounter_ids"
+            ].copy(),
+
+        "preprocessor":
+            preprocessor,
+
+        "transformed_feature_names":
+            transformed_feature_names,
+
+        "fit_partition":
+            TRAIN_LABEL,
+
+        "validation_contributed_to_fit":
+            False,
+
+        "locked_test_accessed":
+            False,
+    }
+
+    return {
+        "fitted_bundle":
+            fitted_bundle,
+
+        "persistence_result": {
+            "preprocessor_path":
+                str(D7_PREPROCESSOR_PATH),
+
+            "preprocessor_sha256":
+                observed_preprocessor_sha256,
+
+            "schema_path":
+                str(D7_TRANSFORMED_SCHEMA_PATH),
+
+            "schema_sha256":
+                observed_schema_sha256,
+
+            "raw_feature_count":
+                EXPECTED_D7_RAW_FEATURE_COUNT,
+
+            "transformed_feature_count":
+                len(transformed_feature_names),
+
+            "train_encounters":
+                int(len(X_train_raw)),
+
+            "validation_encounters":
+                int(len(X_validation_raw)),
+
+            "fit_partition":
+                TRAIN_LABEL,
+
+            "validation_contributed_to_fit":
+                False,
+
+            "locked_test_accessed":
+                False,
+
+            "read_only_consumption":
+                True,
+        },
+
+        "persistence_validation": {
+            "persisted_preprocessor_exists":
+                True,
+
+            "persisted_schema_exists":
+                True,
+
+            "preprocessor_checksum_verified":
+                (
+                    expected_preprocessor_sha256
+                    is None
+                    or observed_preprocessor_sha256
+                    == expected_preprocessor_sha256
+                ),
+
+            "schema_checksum_verified":
+                (
+                    expected_schema_sha256
+                    is None
+                    or observed_schema_sha256
+                    == expected_schema_sha256
+                ),
+
+            "persisted_feature_count":
+                len(transformed_feature_names),
+
+            "loaded_feature_count":
+                len(loaded_feature_names),
+
+            "schema_matches_original":
+                True,
+
+            "loaded_schema_matches_original":
+                True,
+
+            "fit_partition":
+                TRAIN_LABEL,
+
+            "validation_contributed_to_fit":
+                False,
+
+            "locked_test_accessed":
+                False,
+
+            "preprocessor_refitted":
+                False,
+
+            "artifact_rewritten":
+                False,
+
+            "validation_status":
+                "PASS",
+        },
+
+        "read_only_consumption":
+            True,
+
+        "preprocessor_refitted":
+            False,
+
+        "artifact_rewritten":
+            False,
+
+        "locked_test_accessed":
+            False,
+    }

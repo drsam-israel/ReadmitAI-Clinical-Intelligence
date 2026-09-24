@@ -62,7 +62,7 @@ from src.features.preprocessing import (
     EXPECTED_D7_TRANSFORMED_FEATURE_COUNT,
     EXPECTED_D7_TRAIN_ENCOUNTERS,
     EXPECTED_D7_VALIDATION_ENCOUNTERS,
-    build_persisted_d7_primary_preprocessor,
+    load_frozen_d7_primary_preprocessing_bundle,
 )
 
 from pathlib import Path
@@ -452,11 +452,21 @@ def validate_d8_model_development_contract(
 # D8.09 — BUILD AUTHORITATIVE MODEL-DEVELOPMENT MATRICES
 # ============================================================
 
+D8_EXPECTED_D7_PREPROCESSOR_SHA256 = (
+    "076878C0BD7C9B80897F3AA06157719A1E311165299549D83213C789CA1ECEAC"
+)
+
+D8_EXPECTED_D7_SCHEMA_SHA256 = (
+    "69E0E7F19C64350A6995830E875C1303E5D14F55FD7CDA4A7D845CCDE7B756ED"
+)
+
+
 def build_d8_model_development_matrices(
 ) -> dict[str, Any]:
     """
-    Load the frozen D7 preprocessing state and expose only the
-    governed TRAIN and VALIDATION matrices permitted during D8.
+    Consume the frozen D7 preprocessing state through the governed
+    READ-ONLY downstream interface and expose only the TRAIN and
+    VALIDATION matrices permitted during D8.
 
     TRAIN:
         Candidate-model fitting.
@@ -466,110 +476,148 @@ def build_d8_model_development_matrices(
 
     LOCKED TEST:
         Not loaded and not accessible through this function.
+
+    D7 GOVERNANCE:
+        The frozen D7 preprocessor and transformed schema must pass
+        checksum verification. D8 may load and transform through the
+        frozen D7 state, but must never refit or rewrite D7 artifacts.
     """
 
     d7_workflow = (
-        build_persisted_d7_primary_preprocessor()
+        load_frozen_d7_primary_preprocessing_bundle(
+            expected_preprocessor_sha256=(
+                D8_EXPECTED_D7_PREPROCESSOR_SHA256
+            ),
+            expected_schema_sha256=(
+                D8_EXPECTED_D7_SCHEMA_SHA256
+            ),
+        )
     )
 
-    fitted_bundle = (
-        d7_workflow[
-            "fitted_bundle"
-        ]
-    )
+    fitted_bundle = d7_workflow["fitted_bundle"]
+    persistence_validation = d7_workflow[
+        "persistence_validation"
+    ]
+    persistence_result = d7_workflow[
+        "persistence_result"
+    ]
 
-    persistence_validation = (
-        d7_workflow[
-            "persistence_validation"
-        ]
-    )
-
-    if (
-        persistence_validation[
-            "validation_status"
-        ]
-        != "PASS"
-    ):
+    if persistence_validation["validation_status"] != "PASS":
         raise RuntimeError(
             "D8 model development blocked because "
             "the frozen D7 preprocessing gate did not pass."
         )
 
-    X_train = (
-        fitted_bundle[
-            "X_train_transformed"
-        ]
-        .copy()
+    if d7_workflow.get("read_only_consumption") is not True:
+        raise RuntimeError(
+            "D8 requires read-only consumption of the "
+            "frozen D7 preprocessing state."
+        )
+
+    if d7_workflow.get("preprocessor_refitted") is not False:
+        raise RuntimeError(
+            "D8 detected unauthorized D7 preprocessor refitting."
+        )
+
+    if d7_workflow.get("artifact_rewritten") is not False:
+        raise RuntimeError(
+            "D8 detected unauthorized mutation of a frozen D7 artifact."
+        )
+
+    if d7_workflow.get("locked_test_accessed") is not False:
+        raise RuntimeError(
+            "D8 detected unauthorized locked TEST access."
+        )
+
+    if (
+        persistence_result["preprocessor_sha256"]
+        != D8_EXPECTED_D7_PREPROCESSOR_SHA256
+    ):
+        raise RuntimeError(
+            "D8 frozen D7 preprocessor identity verification failed."
+        )
+
+    if (
+        persistence_result["schema_sha256"]
+        != D8_EXPECTED_D7_SCHEMA_SHA256
+    ):
+        raise RuntimeError(
+            "D8 frozen D7 transformed-schema identity verification failed."
+        )
+
+    X_train = fitted_bundle["X_train_transformed"].copy()
+    X_validation = fitted_bundle["X_validation_transformed"].copy()
+    y_train = fitted_bundle["y_train"].copy()
+    y_validation = fitted_bundle["y_validation"].copy()
+
+    transformed_feature_names = list(
+        fitted_bundle["transformed_feature_names"]
     )
 
-    X_validation = (
-        fitted_bundle[
-            "X_validation_transformed"
-        ]
-        .copy()
-    )
+    if X_train.shape != (
+        EXPECTED_D7_TRAIN_ENCOUNTERS,
+        EXPECTED_D7_TRANSFORMED_FEATURE_COUNT,
+    ):
+        raise RuntimeError(
+            "Unexpected frozen D7 TRAIN matrix shape. "
+            f"Observed={X_train.shape}"
+        )
 
-    y_train = (
-        fitted_bundle[
-            "y_train"
-        ]
-        .copy()
-    )
+    if X_validation.shape != (
+        EXPECTED_D7_VALIDATION_ENCOUNTERS,
+        EXPECTED_D7_TRANSFORMED_FEATURE_COUNT,
+    ):
+        raise RuntimeError(
+            "Unexpected frozen D7 VALIDATION matrix shape. "
+            f"Observed={X_validation.shape}"
+        )
 
-    y_validation = (
-        fitted_bundle[
-            "y_validation"
-        ]
-        .copy()
-    )
+    if len(y_train) != EXPECTED_D7_TRAIN_ENCOUNTERS:
+        raise RuntimeError("Unexpected D8 TRAIN outcome count.")
 
-    transformed_feature_names = (
-        fitted_bundle[
-            "transformed_feature_names"
-        ]
-    )
+    if len(y_validation) != EXPECTED_D7_VALIDATION_ENCOUNTERS:
+        raise RuntimeError("Unexpected D8 VALIDATION outcome count.")
+
+    if (
+        len(transformed_feature_names)
+        != EXPECTED_D7_TRANSFORMED_FEATURE_COUNT
+    ):
+        raise RuntimeError(
+            "Unexpected frozen D7 transformed feature count."
+        )
+
+    if X_train.columns.tolist() != transformed_feature_names:
+        raise RuntimeError(
+            "D8 TRAIN transformed schema does not match "
+            "the frozen D7 schema."
+        )
+
+    if X_validation.columns.tolist() != transformed_feature_names:
+        raise RuntimeError(
+            "D8 VALIDATION transformed schema does not match "
+            "the frozen D7 schema."
+        )
 
     return {
-        "X_train":
-            X_train,
-
-        "y_train":
-            y_train,
-
-        "X_validation":
-            X_validation,
-
-        "y_validation":
-            y_validation,
-
-        "transformed_feature_names":
-            transformed_feature_names,
-
+        "X_train": X_train,
+        "y_train": y_train,
+        "X_validation": X_validation,
+        "y_validation": y_validation,
+        "transformed_feature_names": transformed_feature_names,
         "d7_preprocessor_sha256":
-            d7_workflow[
-                "persistence_result"
-            ][
-                "preprocessor_sha256"
-            ],
-
+            persistence_result["preprocessor_sha256"],
         "d7_schema_sha256":
-            d7_workflow[
-                "persistence_result"
-            ][
-                "schema_sha256"
-            ],
+            persistence_result["schema_sha256"],
+        "fit_partition": D8_FIT_PARTITION,
+        "selection_partition": D8_SELECTION_PARTITION,
+        "validation_contributed_to_preprocessing_fit": False,
+        "locked_test_accessed": False,
 
-        "fit_partition":
-            D8_FIT_PARTITION,
-
-        "selection_partition":
-            D8_SELECTION_PARTITION,
-
-        "validation_contributed_to_preprocessing_fit":
-            False,
-
-        "locked_test_accessed":
-            False,
+        # Explicit frozen-artifact governance evidence.
+        "d7_read_only_consumption": True,
+        "d7_preprocessor_refitted": False,
+        "d7_artifact_rewritten": False,
+        "validation_status": "PASS",
     }
 
 

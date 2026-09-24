@@ -69,6 +69,14 @@ D10_EXPECTED_VALIDATION_POSITIVES = 1692
 
 D10_EXPECTED_TRANSFORMED_FEATURE_COUNT = 49
 
+D10_EXPECTED_D7_PREPROCESSOR_SHA256 = (
+    "076878C0BD7C9B80897F3AA06157719A1E311165299549D83213C789CA1ECEAC"
+)
+
+D10_EXPECTED_D7_SCHEMA_SHA256 = (
+    "69E0E7F19C64350A6995830E875C1303E5D14F55FD7CDA4A7D845CCDE7B756ED"
+)
+
 
 # ============================================================
 # D10.03 — GOVERNANCE PROHIBITIONS
@@ -401,20 +409,150 @@ def validate_d10_static_contract() -> dict[str, Any]:
 
 def build_d10_validation_subgroup_source() -> dict[str, Any]:
     """
-    Load the authoritative raw VALIDATION feature frame preserved
-    by the frozen D7 preprocessing bundle.
+    Load the authoritative raw VALIDATION feature frame through
+    the frozen D7 READ-ONLY downstream-consumption boundary.
 
     D10 uses the raw D7 validation frame only for subgroup labels
     and governed encounter alignment. Model predictions continue
     to come from the frozen D8/D9 prediction pathway.
+
+    D10 must not refit or rewrite the frozen D7 preprocessing
+    artifacts and must not access the locked TEST partition.
     """
 
     from src.features.preprocessing import (
-        build_persisted_d7_primary_preprocessor,
+        load_frozen_d7_primary_preprocessing_bundle,
     )
 
-    d7_bundle = build_persisted_d7_primary_preprocessor()
-    fitted_bundle = d7_bundle["fitted_bundle"]
+    d7_bundle = (
+        load_frozen_d7_primary_preprocessing_bundle(
+            expected_preprocessor_sha256=(
+                D10_EXPECTED_D7_PREPROCESSOR_SHA256
+            ),
+            expected_schema_sha256=(
+                D10_EXPECTED_D7_SCHEMA_SHA256
+            ),
+        )
+    )
+
+    required_top_level_keys = {
+        "fitted_bundle",
+        "persistence_validation",
+        "persistence_result",
+        "read_only_consumption",
+        "preprocessor_refitted",
+        "artifact_rewritten",
+        "locked_test_accessed",
+    }
+
+    missing_top_level_keys = sorted(
+        required_top_level_keys.difference(
+            d7_bundle.keys()
+        )
+    )
+
+    if missing_top_level_keys:
+        raise RuntimeError(
+            "D10 received an incomplete frozen D7 preprocessing "
+            "bundle. "
+            f"Missing={missing_top_level_keys}"
+        )
+
+    if d7_bundle.get(
+        "read_only_consumption"
+    ) is not True:
+        raise RuntimeError(
+            "D10 requires read-only consumption of the frozen "
+            "D7 preprocessing state."
+        )
+
+    if d7_bundle.get(
+        "preprocessor_refitted"
+    ) is not False:
+        raise RuntimeError(
+            "D10 detected unauthorized D7 preprocessor refitting."
+        )
+
+    if d7_bundle.get(
+        "artifact_rewritten"
+    ) is not False:
+        raise RuntimeError(
+            "D10 detected unauthorized mutation of a frozen "
+            "D7 preprocessing artifact."
+        )
+
+    if d7_bundle.get(
+        "locked_test_accessed"
+    ) is not False:
+        raise RuntimeError(
+            "D10 detected unauthorized locked TEST access "
+            "through the D7 boundary."
+        )
+
+    persistence_validation = d7_bundle[
+        "persistence_validation"
+    ]
+
+    if persistence_validation.get(
+        "validation_status"
+    ) != "PASS":
+        raise RuntimeError(
+            "D10 cannot proceed because frozen D7 persisted "
+            "preprocessing validation is not PASS."
+        )
+
+    persistence_result = d7_bundle[
+        "persistence_result"
+    ]
+
+    d7_preprocessor_sha256 = persistence_result.get(
+        "preprocessor_sha256"
+    )
+
+    d7_schema_sha256 = persistence_result.get(
+        "schema_sha256"
+    )
+
+    if (
+        d7_preprocessor_sha256
+        != D10_EXPECTED_D7_PREPROCESSOR_SHA256
+    ):
+        raise RuntimeError(
+            "D10 frozen D7 preprocessor checksum mismatch. "
+            f"Expected={D10_EXPECTED_D7_PREPROCESSOR_SHA256}, "
+            f"Observed={d7_preprocessor_sha256}"
+        )
+
+    if (
+        d7_schema_sha256
+        != D10_EXPECTED_D7_SCHEMA_SHA256
+    ):
+        raise RuntimeError(
+            "D10 frozen D7 transformed-schema checksum mismatch. "
+            f"Expected={D10_EXPECTED_D7_SCHEMA_SHA256}, "
+            f"Observed={d7_schema_sha256}"
+        )
+
+    fitted_bundle = d7_bundle[
+        "fitted_bundle"
+    ]
+
+    required_fitted_keys = {
+        "X_validation_raw",
+        "y_validation",
+    }
+
+    missing_fitted_keys = sorted(
+        required_fitted_keys.difference(
+            fitted_bundle.keys()
+        )
+    )
+
+    if missing_fitted_keys:
+        raise RuntimeError(
+            "D10 received an incomplete frozen D7 fitted bundle. "
+            f"Missing={missing_fitted_keys}"
+        )
 
     X_validation_raw = fitted_bundle[
         "X_validation_raw"
@@ -467,6 +605,24 @@ def build_d10_validation_subgroup_source() -> dict[str, Any]:
             "index-aligned."
         )
 
+    if len(
+        X_validation_raw
+    ) != D10_EXPECTED_VALIDATION_ENCOUNTERS:
+        raise RuntimeError(
+            "Unexpected D10 raw VALIDATION encounter count. "
+            f"Expected={D10_EXPECTED_VALIDATION_ENCOUNTERS}, "
+            f"Observed={len(X_validation_raw)}"
+        )
+
+    if int(
+        y_validation_d7.sum()
+    ) != D10_EXPECTED_VALIDATION_POSITIVES:
+        raise RuntimeError(
+            "Unexpected D10 raw VALIDATION positive count. "
+            f"Expected={D10_EXPECTED_VALIDATION_POSITIVES}, "
+            f"Observed={int(y_validation_d7.sum())}"
+        )
+
     return {
         "X_validation_raw":
             X_validation_raw,
@@ -476,6 +632,27 @@ def build_d10_validation_subgroup_source() -> dict[str, Any]:
 
         "validation_index":
             X_validation_raw.index.copy(),
+
+        "d7_preprocessor_sha256":
+            d7_preprocessor_sha256,
+
+        "d7_schema_sha256":
+            d7_schema_sha256,
+
+        "d7_read_only_consumption":
+            True,
+
+        "d7_preprocessor_refitted":
+            False,
+
+        "d7_artifact_rewritten":
+            False,
+
+        "locked_test_accessed":
+            False,
+
+        "validation_status":
+            "PASS",
     }
 
 

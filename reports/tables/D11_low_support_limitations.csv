@@ -1,0 +1,13 @@
+scenario_id,scenario_name,slice_name,encounter_count,positive_count,support_status,limitation
+D11-STRESS-003,Admission Type Category Stability,admission_type_id=7,4,0,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
+D11-STRESS-003,Admission Type Category Stability,admission_type_id=8,52,4,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
+D11-STRESS-004,Admission Source Category Stability,admission_source_id=3,16,3,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
+D11-STRESS-004,Admission Source Category Stability,admission_source_id=5,106,13,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
+D11-STRESS-004,Admission Source Category Stability,admission_source_id=8,1,1,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
+D11-STRESS-004,Admission Source Category Stability,admission_source_id=9,25,3,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
+D11-STRESS-004,Admission Source Category Stability,admission_source_id=10,1,0,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
+D11-STRESS-004,Admission Source Category Stability,admission_source_id=20,23,4,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
+D11-STRESS-004,Admission Source Category Stability,admission_source_id=22,2,1,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
+D11-STRESS-004,Admission Source Category Stability,admission_source_id=25,1,0,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
+D11-STRESS-009,Age Population-Slice Stability,age=[0-10),25,1,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
+D11-STRESS-009,Age Population-Slice Stability,age=[10-20),115,5,LOW_SUPPORT,LOW_SUPPORT_LIMITS_STRONG_INTERPRETATION
