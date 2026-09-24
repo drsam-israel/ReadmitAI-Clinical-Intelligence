@@ -1,0 +1,9 @@
+limitation_id,limitation,control
+D12-LIM-01,SHAP attribution describes model behavior and does not establish causal effects or biological mechanisms.,"All global, directional, local, and slice conclusions are reported as descriptive model-behavior evidence."
+D12-LIM-02,SHAP values are produced in raw XGBoost margin/log-odds space and are not direct probability-point changes.,Probability reconstruction is governed through the logistic expit link and additivity validation.
+D12-LIM-03,Related engineered prior-utilization features may distribute or share attribution and should not be interpreted as independent clinical effects.,Interpretation is performed at both transformed-feature and source-feature-family levels.
+D12-LIM-04,"Observed subgroup and slice attribution differences may reflect population case mix, representation, documentation, or data-generation processes.","Slice evidence is descriptive and does not automatically produce bias, unfairness, or causal labels."
+D12-LIM-05,Low-support age and admission-source slices cannot support strong generalizable interpretation.,Slices below the governed support threshold remain explicit interpretation limitations.
+D12-LIM-06,The unknown-race category demonstrates a data-quality and representation limitation.,Unknown race is retained transparently and is not silently mapped to a known category.
+D12-LIM-07,"Validation-partition explainability does not establish external, temporal, institutional, geographic, or prospective transportability.",No external or prospective validation claim is made.
+D12-LIM-08,"Explainability cannot by itself establish clinical utility, clinical appropriateness, fairness, safety, or deployment readiness.",D12 progression is limited to lifecycle governance and does not authorize clinical deployment.

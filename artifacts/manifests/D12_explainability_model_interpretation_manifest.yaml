@@ -1,0 +1,35 @@
+stage: "D12"
+stage_name: "Explainability & Model Interpretation Governance"
+reporting_package: "Explainability & Model Interpretation Evidence Package"
+validation_status: "PASS"
+source_lifecycle_stage: "D11"
+source_git_commit: "9fb775c"
+evaluation_partition: "validation"
+selected_model: "xgboost"
+model_sha256: "2FD02A54DF759EBAAF0D02D64D5ACE16A519DF016990FAC065AF3249BDA88085"
+d7_preprocessor_sha256: "076878C0BD7C9B80897F3AA06157719A1E311165299549D83213C789CA1ECEAC"
+d7_schema_sha256: "69E0E7F19C64350A6995830E875C1303E5D14F55FD7CDA4A7D845CCDE7B756ED"
+development_threshold: 0.12
+validation_encounters: 15052
+validation_positives: 1692
+validation_negatives: 13360
+transformed_feature_count: 49
+source_feature_family_count: 10
+prior_utilization_absolute_attribution_percent: 68.52025594108491
+local_explanation_case_count: 5
+attribution_stability_slice_count: 42
+adequate_support_slice_count: 34
+low_support_slice_count: 8
+clinical_plausibility_review_item_count: 6
+d11_carry_forward_resolution_count: 6
+explainability_limitation_count: 8
+disposition: "CONDITIONAL_PASS_PROGRESS_TO_D13_WITH_EXPLAINABILITY_LIMITATIONS"
+progression_authorized: true
+next_lifecycle_stage: "D13_MODEL_REGISTRY_AND_ARTIFACT_FREEZE"
+clinical_appropriateness_established: false
+fairness_established: false
+causality_established: false
+external_validation_established: false
+d14_locked_test_reassessment_required: true
+locked_test_accessed: false
+deployment_authorized: false
