@@ -1,0 +1,69 @@
+stage_id: D14
+stage_name: Locked-Test Evaluation
+generated_at_utc: '2026-09-25T10:08:17.920945+00:00'
+registry_id: DIABETES_READMISSION_XGB_D13_V1
+candidate_system_sha256: 9349A52C715517666540C0D5B1EDB148D48709C0FC2CC77BE9B53F10FE373679
+source_git_commit: b4118f9
+evaluation_partition: LOCKED_TEST
+evaluation_mode: ONE_TIME_CONFIRMATORY_EVALUATION
+frozen_threshold: 0.12
+test_population:
+  encounters: 15038
+  patients: 10568
+  positives: 1707
+  negatives: 13331
+gate_integrity_status: PASS
+disposition: CONDITIONAL_PASS_PROGRESS_TO_D15_WITH_DOCUMENTED_RESIDUAL_RISKS
+next_lifecycle_stage: D15_DEPLOYMENT_AND_MONITORING_DESIGN
+residual_risk_count: 7
+unresolved_residual_risk_count: 7
+external_validation_completed: false
+clinical_effectiveness_established: false
+deployment_authorized: false
+reporting_validation:
+  validation_status: PASS
+  overall_pass: true
+  checks:
+    performance_validation_passed: true
+    subgroup_validation_passed: true
+    robustness_validation_passed: true
+    explainability_validation_passed: true
+    gate_integrity_passed: true
+    disposition_preserved: true
+    next_stage_preserved: true
+    seven_residual_risks_retained: true
+    all_residual_risks_unresolved: true
+    external_validation_not_claimed: true
+    clinical_effectiveness_not_claimed: true
+    deployment_not_authorized: true
+artifact_inventory:
+- path: reports/governance/D14_locked_test_evaluation_contract.md
+  sha256: 24E00C44465D7F9F8FE7838510482C487C254E8EA4F3CE105E9B90AA497434F5
+  size_bytes: 2761
+- path: reports/governance/D14_locked_test_evaluation_gate_decision.md
+  sha256: 51FBDED5D98ED5C2606083CBB88694AE1DEF8CB0712EAB95D443F150B964EB28
+  size_bytes: 2588
+- path: reports/governance/D14_final_governance_record.json
+  sha256: 088F05937C691B94F2F4825067C47F98A13A7CD567AD400DDAF138112C7893F1
+  size_bytes: 9000
+- path: reports/tables/D14_locked_test_performance.csv
+  sha256: D16E6F21B1CC5B3B568631CBDDB127FAD23D615DAC115920F585519C8F3273A3
+  size_bytes: 749
+- path: reports/tables/D14_validation_test_comparison.csv
+  sha256: D03668A3B5DB927B0E1CFB4CFC0EF0D3AF5E4A1C75BAE1D35564F8405DEDA29B
+  size_bytes: 1047
+- path: reports/tables/D14_locked_test_subgroup_evidence.csv
+  sha256: 6B72DE5294B8660D30C043B03905084D1942197F873FE70ED5984132006D8F7D
+  size_bytes: 4553
+- path: reports/tables/D14_locked_test_robustness_evidence.csv
+  sha256: 801944CBF604031F36D094B106872F4D33AE478229C9B9519FB2FBE0A8B2DF27
+  size_bytes: 10726
+- path: reports/tables/D14_locked_test_explainability_attribution.csv
+  sha256: 21C25B1F9B8D8245FDF4F25383D4D0E26851FC9BC9BC3995005335CFB97FCEC0
+  size_bytes: 914
+- path: reports/tables/D14_locked_test_local_explanations.csv
+  sha256: 17BD189C25C161157139C00A6D5B0F57C9346C28CAF55542ECB67E74BA6CC17A
+  size_bytes: 5726
+- path: reports/tables/D14_residual_risk_register.csv
+  sha256: 8AB3F1C9400EC5349E79E2A260C2F73BC712FCF64AEBE4CBF0F40A58B97938CD
+  size_bytes: 3969
