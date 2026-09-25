@@ -1,0 +1,11 @@
+control,value
+registered_candidate_mutated,False
+model_retrained,False
+preprocessor_refitted,False
+feature_contract_changed,False
+threshold_retuned,False
+probability_recalibrated,False
+locked_test_accessed,False
+locked_test_evaluated,False
+deployment_authorized,False
+post_freeze_change_requires_new_identity,True

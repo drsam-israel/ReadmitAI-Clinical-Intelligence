@@ -1,0 +1,94 @@
+{
+  "candidate_system_sha256": "9349A52C715517666540C0D5B1EDB148D48709C0FC2CC77BE9B53F10FE373679",
+  "deployment_authorized": false,
+  "freeze_manifest_sha256": "0F278573E2C4D139E6D0968DD624AB7C1304825D3B805B6FEF288162051B6119",
+  "freeze_status": "FROZEN_PENDING_D14_LOCKED_TEST",
+  "locked_test_accessed": false,
+  "locked_test_evaluated": false,
+  "post_freeze_change_requires_new_identity": true,
+  "registry_record": {
+    "artifact_inventory": [
+      {
+        "component": "selected_model",
+        "frozen": true,
+        "path": "artifacts\\models\\D8_selected_development_model.joblib",
+        "sha256": "2FD02A54DF759EBAAF0D02D64D5ACE16A519DF016990FAC065AF3249BDA88085"
+      },
+      {
+        "component": "model_metadata",
+        "frozen": true,
+        "path": "artifacts\\models\\D8_selected_development_model_metadata.json",
+        "sha256": "5838A6C77F05BB183F90B9AA4B0ED9F0AE5B0FBF2E3E1B1326A79A3A67A1AC76"
+      },
+      {
+        "component": "preprocessor",
+        "frozen": true,
+        "path": "C:\\Users\\user\\Documents\\Diabetes_Readmission_Clinical_AI\\artifacts\\preprocessors\\D7_primary_preprocessor.joblib",
+        "sha256": "076878C0BD7C9B80897F3AA06157719A1E311165299549D83213C789CA1ECEAC"
+      },
+      {
+        "component": "transformed_feature_schema",
+        "frozen": true,
+        "path": "C:\\Users\\user\\Documents\\Diabetes_Readmission_Clinical_AI\\artifacts\\preprocessors\\D7_transformed_feature_schema.txt",
+        "sha256": "69E0E7F19C64350A6995830E875C1303E5D14F55FD7CDA4A7D845CCDE7B756ED"
+      },
+      {
+        "component": "source_feature_contract",
+        "frozen": true,
+        "path": "authoritative:D7.PRIMARY_CANDIDATE_FEATURES",
+        "sha256": "277CCC7C847B2FE6882A4072EA991B1FEF701D0222471B8B1F583DE06924C0BC"
+      }
+    ],
+    "candidate_status": "FROZEN_DEVELOPMENT_CANDIDATE_PENDING_D14_LOCKED_TEST",
+    "candidate_system_sha256": "9349A52C715517666540C0D5B1EDB148D48709C0FC2CC77BE9B53F10FE373679",
+    "change_control_status": {
+      "deployment_authorized": false,
+      "feature_contract_changed": false,
+      "locked_test_accessed": false,
+      "locked_test_evaluated": false,
+      "model_retrained": false,
+      "post_freeze_change_requires_new_identity": true,
+      "preprocessor_refitted": false,
+      "probability_recalibrated": false,
+      "registered_candidate_mutated": false,
+      "threshold_retuned": false
+    },
+    "deployment_authorized": false,
+    "development_operating_threshold": 0.12,
+    "evaluation_partition": "NONE",
+    "lifecycle_provenance": {
+      "D10": "fairness_and_subgroup_evaluation",
+      "D11": "robustness_and_transportability",
+      "D12": "explainability_and_model_interpretation_governance",
+      "D13": "model_registry_and_artifact_freeze",
+      "D13_source_git_commit": "4e995f2",
+      "D7": "governed_preprocessing",
+      "D8": "model_development_and_selection",
+      "D9": "clinical_utility_and_threshold_governance",
+      "next_stage": "D14_LOCKED_TEST_EVALUATION"
+    },
+    "locked_test_accessed": false,
+    "locked_test_evaluated": false,
+    "model_version": "1.0.0",
+    "registry_id": "DIABETES_READMISSION_XGB_D13_V1",
+    "software_environment": {
+      "git": "2.55.0.windows.3",
+      "joblib": "1.6.0",
+      "numpy": "2.5.3",
+      "pandas": "3.0.5",
+      "platform": "Windows-10-10.0.19045-SP0",
+      "python": "3.13.15",
+      "scikit_learn": "1.9.1",
+      "shap": "0.52.0",
+      "xgboost": "3.4.1"
+    },
+    "software_environment_sha256": "D008029639FF03569910412173B84B557C3694A12B24ED8198E06F38616A6E7E",
+    "source_feature_contract_sha256": "277CCC7C847B2FE6882A4072EA991B1FEF701D0222471B8B1F583DE06924C0BC",
+    "stage_id": "D13",
+    "stage_name": "Model Registry & Artifact Freeze"
+  },
+  "software_environment_sha256": "D008029639FF03569910412173B84B557C3694A12B24ED8198E06F38616A6E7E",
+  "source_feature_contract_sha256": "277CCC7C847B2FE6882A4072EA991B1FEF701D0222471B8B1F583DE06924C0BC",
+  "stage_id": "D13",
+  "stage_name": "Model Registry & Artifact Freeze"
+}

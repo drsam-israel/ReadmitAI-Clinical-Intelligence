@@ -1,0 +1,10 @@
+stage_or_reference,provenance
+D7,governed_preprocessing
+D8,model_development_and_selection
+D9,clinical_utility_and_threshold_governance
+D10,fairness_and_subgroup_evaluation
+D11,robustness_and_transportability
+D12,explainability_and_model_interpretation_governance
+D13,model_registry_and_artifact_freeze
+D13_source_git_commit,4e995f2
+next_stage,D14_LOCKED_TEST_EVALUATION
