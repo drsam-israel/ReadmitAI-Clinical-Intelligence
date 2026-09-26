@@ -1,0 +1,75 @@
+stage_id: D15
+stage_name: DEPLOYMENT_AND_MONITORING_DESIGN
+generated_at_utc: 2026-09-25T14:16:38Z
+source_stage: D14
+source_git_commit: 1e003ee
+next_stage: D16
+registry_id: DIABETES_READMISSION_XGB_D13_V1
+model_version: 1.0.0
+candidate_system_sha256: 9349A52C715517666540C0D5B1EDB148D48709C0FC2CC77BE9B53F10FE373679
+frozen_operating_threshold: 0.12
+bootstrap_replicates: 2000
+bootstrap_confidence_level: 0.95
+bootstrap_random_seed: 42
+external_validation_established: false
+clinical_effectiveness_established: false
+production_deployment_authorized: false
+residual_risk_count: 7
+gate_decision: CONDITIONAL_PASS_PROGRESS_TO_D16_WITH_DOCUMENTED_RESIDUAL_RISKS
+artifacts:
+  - artifact_key: governance_contract
+    path: reports/governance/D15_deployment_monitoring_contract.md
+    sha256: B927DD80655347822B457CD383D649826C634CFA2FDDE15F93F3675F92811284
+    size_bytes: 2201
+  - artifact_key: architecture_design
+    path: reports/governance/D15_deployment_architecture_design.md
+    sha256: 2AB734FBF6A366918D33D46C84342FB362B75F138A660D5021DA6DA151D2C42D
+    size_bytes: 3908
+  - artifact_key: monitoring_plan
+    path: reports/governance/D15_monitoring_and_drift_control_plan.md
+    sha256: 8D8844BCE5961F7360A5E1719216B7C5E61BF7B392023A24DC370B32C2B0BC81
+    size_bytes: 1612
+  - artifact_key: operational_governance
+    path: reports/governance/D15_incident_change_rollback_continuity_plan.md
+    sha256: 49247751E118748AA8104C3EC119073922220EBD012BB7E4BB0BEA3003A21999
+    size_bytes: 1353
+  - artifact_key: deployment_readiness_assessment
+    path: reports/governance/D15_deployment_readiness_assessment.md
+    sha256: 82BA286E6E35001E2E4D69341D720D9BCFC569556E77152ED4365F145C89CB7C
+    size_bytes: 2305
+  - artifact_key: gate_decision
+    path: reports/governance/D15_deployment_monitoring_gate_decision.md
+    sha256: B5B65C0837CFAAC258BAAEC8D164AAF311E90D915509E5BD672FAFFCCFD3AA51
+    size_bytes: 1308
+  - artifact_key: architecture_controls
+    path: reports/tables/D15_architecture_controls.csv
+    sha256: 21217F765B859DAEDC04F10964C64E58C7BF113218F82C2BBFE64A258BA6155D
+    size_bytes: 5491
+  - artifact_key: monitoring_control_catalogue
+    path: reports/tables/D15_monitoring_control_catalogue.csv
+    sha256: C1438CA6203F9E1170F15EB6F840FFCADC72FAFE4E0C8EA19269D337C6297757
+    size_bytes: 3943
+  - artifact_key: quantitative_reference_bands
+    path: reports/tables/D15_quantitative_reference_bands.csv
+    sha256: 62FBC1AA15C7B08DCF4A5B6452110D7F9B7F5FEBC9269ACBEA54AEC0B5288459
+    size_bytes: 1202
+  - artifact_key: bootstrap_discrimination_uncertainty
+    path: reports/tables/D15_bootstrap_discrimination_uncertainty.csv
+    sha256: C0D7C40C73E6D4BAC994369C518505DE51700CAC2C2A0D2A9A9DE3E35CDDC645
+    size_bytes: 764
+  - artifact_key: known_risk_slice_references
+    path: reports/tables/D15_known_risk_slice_references.csv
+    sha256: BC14C8FA31DFD7290F880F96D987AB664ED68BFA90B0C1CCC0994375AAEF1A17
+    size_bytes: 942
+  - artifact_key: escalation_trigger_catalogue
+    path: reports/tables/D15_escalation_trigger_catalogue.csv
+    sha256: 314A8929F0D1C6F754248C8834F1E22C90D7FCA0136167A558AE61F4939AF34A
+    size_bytes: 2308
+  - artifact_key: residual_risk_traceability
+    path: reports/tables/D15_residual_risk_traceability.csv
+    sha256: 409159879FACC63514B99F43455D07FF425C5B15ABD971CDD6368FC887992B34
+    size_bytes: 2092
+  - artifact_key: operational_control_evidence
+    path: reports/tables/D15_operational_control_evidence.csv
+    sha256: CCCCCEDF4C55C22904FED6A2EDE8FEF2ECD6735286E63757E660D7E8C10BC579
+    size_bytes: 2697
