@@ -15,7 +15,7 @@
 
 > **Interactive Clinical AI Prototype**
 
-[**Launch ReadmitAI Clinical Intelligence →**](YOUR_STREAMLIT_APP_URL)
+[**Launch ReadmitAI Clinical Intelligence →**](https://readmitai-clinical-intelligence.streamlit.app/)
 
 **Deployment status:** Research & Validation Prototype  
 **Clinical use:** Not authorized for production clinical care  
