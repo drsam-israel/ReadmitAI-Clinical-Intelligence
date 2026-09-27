@@ -1,37 +1,16 @@
-# ============================================================
-# Diabetes Readmission Clinical AI
-# Core Project Dependencies
-# ============================================================
+streamlit==1.64.0
+altair==6.3.0
 
-# Data engineering
-numpy
-pandas
-pyarrow
-PyYAML
+pandas==3.0.5
+numpy==2.5.3
 
-# Scientific computing
-scipy
+scikit-learn==1.9.1
+scipy==1.18.1
+joblib==1.6.0
 
-# Machine learning
-scikit-learn
-xgboost
+xgboost==3.4.1
+shap==0.52.0
+numba==0.67.0
+llvmlite==0.49.0
 
-# Explainability
-shap
-
-# Visualization
-matplotlib
-
-# Statistical analysis
-statsmodels
-
-# Model persistence
-joblib
-
-# Development and testing
-pytest
-
-# Jupyter environment
-jupyter
-jupyterlab
-ipykernel
+PyYAML==6.0.3

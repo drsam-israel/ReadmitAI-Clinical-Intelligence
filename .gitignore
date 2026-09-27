@@ -1,4 +1,5 @@
 # ============================================================
+# ReadmitAI Clinical Intelligence
 # Diabetes Readmission Clinical AI
 # Git Ignore Rules
 # ============================================================
@@ -46,13 +47,13 @@ desktop.ini
 
 # ------------------------------------------------------------
 # 6. Raw and derived datasets
-# Clinical/source data must not be committed to Git
+# Clinical/source data must never be committed to Git
 # ------------------------------------------------------------
 data/raw/*
 data/interim/*
 data/processed/*
 
-# Preserve directory structure
+# Preserve data directory structure only
 !data/raw/.gitkeep
 !data/interim/.gitkeep
 !data/processed/.gitkeep
@@ -60,17 +61,20 @@ data/processed/*
 
 # ------------------------------------------------------------
 # 7. Persisted ML artifacts
-# Large/local binary artifacts are governed separately
+# Model/preprocessor binaries are excluded by default.
+# Only explicitly governed deployment artifacts are permitted.
 # ------------------------------------------------------------
 artifacts/models/*
 artifacts/preprocessors/*
 
+# Preserve directory structure
 !artifacts/models/.gitkeep
 !artifacts/preprocessors/.gitkeep
 
 
 # ------------------------------------------------------------
 # 8. Common model / serialization binaries
+# Exclude serialized ML artifacts globally by default
 # ------------------------------------------------------------
 *.joblib
 *.pkl
@@ -79,7 +83,15 @@ artifacts/preprocessors/*
 
 
 # ------------------------------------------------------------
-# 9. Secrets and local environment configuration
+# 9. ReadmitAI deployment exceptions
+# These frozen governed artifacts are required for inference.
+# ------------------------------------------------------------
+!artifacts/models/D8_selected_development_model.joblib
+!artifacts/preprocessors/D7_primary_preprocessor.joblib
+
+
+# ------------------------------------------------------------
+# 10. Secrets and local environment configuration
 # ------------------------------------------------------------
 .env
 .env.*
@@ -88,11 +100,41 @@ artifacts/preprocessors/*
 secrets.*
 credentials.*
 
+.streamlit/secrets.toml
+
 
 # ------------------------------------------------------------
-# 10. Logs and temporary files
+# 11. Logs, audit outputs, and temporary files
 # ------------------------------------------------------------
 *.log
 *.tmp
 *.temp
 ~$*
+
+artifacts/audit_logs/*
+
+# Preserve audit-log directory structure if required
+!artifacts/audit_logs/.gitkeep
+
+
+# ------------------------------------------------------------
+# 12. Local Streamlit runtime files
+# Keep deployable configuration separate from local secrets
+# ------------------------------------------------------------
+.streamlit/secrets.toml
+
+
+# ------------------------------------------------------------
+# 13. Local coverage / testing outputs
+# ------------------------------------------------------------
+.coverage
+coverage.xml
+htmlcov/
+
+
+# ------------------------------------------------------------
+# 14. Build and packaging outputs
+# ------------------------------------------------------------
+build/
+dist/
+*.egg-info/
