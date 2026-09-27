@@ -3,9 +3,35 @@
 # 30-Day Readmission Clinical Decision-Support Prototype
 # ============================================================
 
+
+# ============================================================
+# DEPLOYMENT PATH BOOTSTRAP
+# ============================================================
+# Ensures the repository root is available when Streamlit
+# Community Cloud executes app/readmitai.py directly.
+# ============================================================
+
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+
+# ============================================================
+# APPLICATION DEPENDENCIES
+# ============================================================
+
 import streamlit as st
 import pandas as pd
 import altair as alt
+
+
+# ============================================================
+# READMITAI APPLICATION SERVICES
+# ============================================================
 
 from app.services.inference_service import run_readmission_inference
 from app.services.explainability_service import explain_readmission_prediction
@@ -14,7 +40,6 @@ from app.services.explainability_evidence_service import (
 )
 from app.services.model_evidence_service import get_model_evidence
 from app.services.monitoring_evidence_service import get_monitoring_evidence
-
 # ============================================================
 # APPLICATION CONFIGURATION
 # ============================================================
