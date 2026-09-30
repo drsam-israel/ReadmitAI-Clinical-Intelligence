@@ -20,13 +20,28 @@
 **Deployment status:** Research & Validation Prototype  
 **Clinical use:** Not authorized for production clinical care  
 **Human oversight:** Required
-
----
-
 **Frozen Model:** `DIABETES_READMISSION_XGB_D13_V1`  
 **Model Version:** `1.0.0`  
 **Frozen Operating Threshold:** `0.12`  
 **Production Deployment:** `NOT AUTHORIZED`
+
+
+## 📑 Executive Project Deliverables
+
+For executive, clinical, technical, and governance review, the project is supported by four concise deliverables documenting the complete journey from clinical problem definition through model validation, governance, clinical translation, and monitoring design.
+
+| Deliverable | Purpose |
+|---|---|
+| **[01 — Executive Report](docs/executive-deliverables/Diabetes_Readmission_Clinical_AI_Executive_Report.pdf)** | Executive overview of the clinical problem, AI solution, validation evidence, material risks, governance decision, clinical translation, and next evidence gates. |
+| **[02 — Clinical AI Translation & Governance Case Study](docs/executive-deliverables/Diabetes_Readmission_Clinical_AI_Case_Study.pdf)** | End-to-end case study showing how the clinical problem was translated through data, machine learning, validation, explainability, safety, governance, deployment, and monitoring. |
+| **[03 — Clinical AI Model Validation Report](docs/executive-deliverables/Clinical_AI_Model_Validation_Report.pdf)** | Detailed assurance evidence covering locked-test performance, operating-point behavior, robustness, explainability, subgroup findings, residual risks, and validation disposition. |
+| **[04 — Clinical AI Model Validation Policy](docs/executive-deliverables/Clinical_AI_Model_Validation_Policy.pdf)** | Governance framework defining requirements for internal, locked-test, temporal, external, prospective, and repeat validation of clinical AI models. |
+
+### Recommended Reading Path
+
+**Executive Report → Case Study → Validation Report → Validation Policy**
+
+> **Current evidence position:** Internal locked-test validation completed | Governance disposition: Conditional Pass | External validation: Not established | Clinical effectiveness: Not established | Production clinical use: Not authorized.
 
 ---
 
