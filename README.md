@@ -547,6 +547,8 @@ SHAP Explanation        Safety Context
                    v
           Human Clinical Review
 
+```
+
 ---
 
 Diabetes_Readmission_Clinical_AI/
